@@ -1,8 +1,12 @@
 package org.jaalon.craftmanager.lib;
 
+import org.jaalon.craftmanager.lib.repository.Repository;
+
 public class ComponentBuilder {
+    Repository repository;
     Component component;
     public ComponentBuilder() {
+        repository = Repository.getInstance();
         component = new Component();
     }
 
@@ -23,6 +27,7 @@ public class ComponentBuilder {
 
     public Component done() {
         assert (component.getLionPrice() != null) || (component.getVendorPrice() != null);
+        repository.addComponent(component);
         return component;
     }
 }

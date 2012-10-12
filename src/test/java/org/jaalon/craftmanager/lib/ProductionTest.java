@@ -3,7 +3,6 @@ package org.jaalon.craftmanager.lib;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class ProductionTest {
     @Test
@@ -61,11 +60,9 @@ public class ProductionTest {
                 .addToRecipe(1, panneau).done();
 
         Recipe recipe = tunique.getBestPricedRecipe();
-        String bestRecipe = "1 Insigne d'explorateur en lin brodé," +
-                " 4 Chute de lin," +
-                " 2 Segment de cuir coriace," +
-                " 3 Bobine de fil de lin";
-        int bestPrice = 614;
+        String bestRecipe = "8 Chute de lin, 5 Bobine de fil de lin," +
+                " 8 Griffe acérée, 2 Segment de cuir coriace, 3 Bobine de fil de lin";
+        int bestPrice = 588;
         assertEquals(bestRecipe, recipe.toString());
         assertEquals(bestPrice, recipe.getBestPrice());
     }

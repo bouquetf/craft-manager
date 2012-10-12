@@ -1,0 +1,11 @@
+Type;Name;Vendor price;Black lion price;ingredient 1 number;ingredient 1 name;ingredient 2 number;ingredient 2 name;ingredient 3 number;ingredient 3 name;ingredient 4 number;ingredient 4 name
+Base;Chute de lin;;19;;;;;;;;
+Base;Segment de cuir coriace;;13;;;;;;;;
+Complex;Rouleau de lin;;41;2;Chute de lin;;;;;;
+Complex;Morceau de cuir coriace traité;;29;2;Segment de cuir coriace;;;;;;
+Base;Bobine de fil de lin;;38;;;;;;;;
+Base;Griffe acérée;;24;;;;;;;;
+Complex;Insigne d'explorateur en lin brodé;;398;1;Rouleau de lin;5;Bobine de fil de lin;8;Griffe acérée;;
+Complex;Doublure de manteau en lin;;44;1;Rouleau de lin;;;;;;
+Complex;Panneau de manteau en lin;;430;4;Rouleau de lin;1;Morceau de cuir coriace traité;3;Bobine de fil de lin;;
+Complex;Tunique d'explorateur ailée (Maître);;84;1;Insigne d'explorateur en lin brodé;1;Doublure de manteau en lin;1;Panneau de manteau en lin;;

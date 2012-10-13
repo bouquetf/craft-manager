@@ -6,7 +6,7 @@
 
     <groupId>craft-manager-lib</groupId>
     <artifactId>craft-manager-lib</artifactId>
-    <version>1.0</version>
+    <version>0.1-SNAPSHOT</version>
 
     <dependencies>
         <dependency>

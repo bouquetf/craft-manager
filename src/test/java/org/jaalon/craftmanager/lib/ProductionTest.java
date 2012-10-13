@@ -1,36 +1,51 @@
 package org.jaalon.craftmanager.lib;
 
+import org.jaalon.craftmanager.lib.repository.Repository;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class ProductionTest {
+
+    public static final String BOLT_OF_LINEN = "Bolt of linen";
+    public static final String LINEN_SCRAP = "Linen scrap";
+    public static final String JUTE_SCRAP = "Jute scrap";
+    public static final String BOLT_OF_JUTE = "Bolt of jute";
+    public static final String PILE_OF_GLITTERING_DUST = "Pile of Glittering Dust";
+    public static final String EIGHT_SLOT_INVISIBLE_BAG = "Eight Slot Invisible Bag";
+    private Repository repository;
+
+    @Before
+    public void setUp() {
+        this.repository = Repository.getInstance();
+    }
+
     @Test
     public void testGetRecipeForSimpleRecipe() {
-        Component linenScrap = new ComponentBuilder().setName("Linen scrap").setBlackLionPrice(20).done();
-        Production boltOfLinen = new ProductionBuilder().setName("Bolt of linen").setBlackLionPrice(41)
-                .addToRecipe(2, linenScrap).done();
+        new ComponentBuilder().setName(LINEN_SCRAP).setBlackLionPrice(20).done();
+        new ProductionBuilder().setName(BOLT_OF_LINEN).setBlackLionPrice(41).addToRecipe(2, LINEN_SCRAP).done();
 
-        assertEquals("2 Linen scrap", boltOfLinen.getIngredientsString());
+        Production production = (Production) repository.getComponent(BOLT_OF_LINEN);
+        assertEquals("2 Linen scrap", production.getIngredientsString());
     }
 
     @Test
     public void testGetRecipeForComplexRecipe() {
-        Component juteScrap = new ComponentBuilder().setName("Jute scrap").setBlackLionPrice(0).done();
-        Production boltOfJute = new ProductionBuilder().setName("Bolt of jute").setBlackLionPrice(0)
-                .addToRecipe(2, juteScrap).done();
-        Component pileOfGlitteringDust = new ComponentBuilder().setName("Pile of Glittering Dust").setBlackLionPrice(0)
-                .done();
-        Production eightSlotInvisibleBag = new ProductionBuilder().setName("Eight Slot Invisible Bag")
-                .setBlackLionPrice(0).addToRecipe(10, boltOfJute).addToRecipe(3, pileOfGlitteringDust).done();
+        new ComponentBuilder().setName(JUTE_SCRAP).setBlackLionPrice(2).done();
+        new ProductionBuilder().setName(BOLT_OF_JUTE).setBlackLionPrice(3).addToRecipe(2, JUTE_SCRAP).done();
+        new ComponentBuilder().setName(PILE_OF_GLITTERING_DUST).setBlackLionPrice(1).done();
+        new ProductionBuilder().setName(EIGHT_SLOT_INVISIBLE_BAG).setBlackLionPrice(5)
+                .addToRecipe(10, BOLT_OF_JUTE).addToRecipe(3, PILE_OF_GLITTERING_DUST).done();
 
-        assertEquals("10 Bolt of jute, 3 Pile of Glittering Dust", eightSlotInvisibleBag.getIngredientsString());
+        Production production = (Production) repository.getComponent(EIGHT_SLOT_INVISIBLE_BAG);
+        assertEquals("10 Bolt of jute, 3 Pile of Glittering Dust", production.getBestPricedRecipe().toString());
     }
 
     @Test
     public void testGetBestPricedRecipeForSimpleRecipe() {
-        Component linenScrap = new ComponentBuilder().setName("Linen scrap").setBlackLionPrice(20).done();
-        Production boltOfLinen = new ProductionBuilder().setName("Bolt of linen").setBlackLionPrice(41)
+        Component linenScrap = new ComponentBuilder().setName(LINEN_SCRAP).setBlackLionPrice(20).done();
+        Production boltOfLinen = new ProductionBuilder().setName(BOLT_OF_LINEN).setBlackLionPrice(41)
                 .addToRecipe(2, linenScrap).done();
 
         Recipe bestPricedRecipe = boltOfLinen.getBestPricedRecipe();
@@ -60,9 +75,8 @@ public class ProductionTest {
                 .addToRecipe(1, panneau).done();
 
         Recipe recipe = tunique.getBestPricedRecipe();
-        String bestRecipe = "8 Chute de lin, 5 Bobine de fil de lin," +
-                " 8 Griffe acérée, 2 Segment de cuir coriace, 3 Bobine de fil de lin";
-        int bestPrice = 588;
+        String bestRecipe = "1 Insigne d'explorateur en lin brodé, 1 Doublure de manteau en lin, 1 Panneau de manteau en lin";
+        int bestPrice = 872;
         assertEquals(bestRecipe, recipe.toString());
         assertEquals(bestPrice, recipe.getBestPrice());
     }

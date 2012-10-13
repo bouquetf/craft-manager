@@ -65,13 +65,20 @@ public class Recipe {
         Recipe bestRecipe;
         Production ingredientProduction = (Production) ingredient.getComponent();
         Recipe bestPricedIngredientRecipe = ingredientProduction.getBestPricedRecipe();
-        if (ingredient.getPrice()< bestPricedIngredientRecipe.getBestPrice()) {
+        if (ingredient.getPrice()< ingredient.getPrice() * bestPricedIngredientRecipe.getBestPrice()) {
             bestRecipe = new Recipe();
             bestRecipe.add(ingredient);
         } else {
-            bestRecipe = bestPricedIngredientRecipe;
+            bestRecipe = bestPricedIngredientRecipe.multiplyBy(ingredient.getNumber());
         }
         return bestRecipe;
+    }
+
+    private Recipe multiplyBy(int number) {
+        for (Ingredient ingredient : ingredientList) {
+            ingredient.setNumber(ingredient.getNumber()*number);
+        }
+        return this;
     }
 
 }

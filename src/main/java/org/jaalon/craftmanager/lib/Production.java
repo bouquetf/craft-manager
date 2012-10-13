@@ -8,7 +8,7 @@ public class Production extends Component {
         recipe = new Recipe();
     }
 
-    public void addToRecipe(int number, Component component) {
+    public void addToRecipe(int number, String component) {
         Ingredient ingredient = new Ingredient(number, component);
         recipe.add(ingredient);
     }

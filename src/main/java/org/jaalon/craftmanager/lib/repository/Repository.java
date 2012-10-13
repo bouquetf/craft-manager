@@ -21,7 +21,7 @@ public class Repository {
         components.put(component.getName(), component);
     }
 
-    public void getComponent(String name) {
-        components.get(name);
+    public Component getComponent(String name) {
+        return components.get(name);
     }
 }

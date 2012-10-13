@@ -20,8 +20,13 @@ public class ProductionBuilder {
         return this;
     }
 
-    public ProductionBuilder addToRecipe(int number, Component ingredientType) {
-        production.addToRecipe(number, ingredientType);
+    public ProductionBuilder addToRecipe(int number, String ingredient) {
+        production.addToRecipe(number, ingredient);
+        return this;
+    }
+
+    public ProductionBuilder addToRecipe(int number, Component ingredient) {
+        production.addToRecipe(number, ingredient.getName());
         return this;
     }
 

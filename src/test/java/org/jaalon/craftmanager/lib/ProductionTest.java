@@ -14,70 +14,82 @@ public class ProductionTest {
     public static final String BOLT_OF_JUTE = "Bolt of jute";
     public static final String PILE_OF_GLITTERING_DUST = "Pile of Glittering Dust";
     public static final String EIGHT_SLOT_INVISIBLE_BAG = "Eight Slot Invisible Bag";
+    public static final String CHUTE_DE_LIN = "Chute de lin";
+    public static final String SEGMENT_DE_CUIR_CORIACE = "Segment de cuir coriace";
+    public static final String ROULEAU_DE_LIN = "Rouleau de lin";
+    public static final String MORCEAU_DE_CUIR_CORIACE_TRAITÉ = "Morceau de cuir coriace traité";
+    public static final String BOBINE_DE_FIL_DE_LIN = "Bobine de fil de lin";
+    public static final String GRIFFE_ACÉRÉE = "Griffe acérée";
+    public static final String INSIGNE_D_EXPLORATEUR_EN_LIN_BRODÉ = "Insigne d'explorateur en lin brodé";
+    public static final String DOUBLURE_DE_MANTEAU_EN_LIN = "Doublure de manteau en lin";
+    public static final String PANNEAU_DE_MANTEAU_EN_LIN = "Panneau de manteau en lin";
+    public static final String TUNIQUE_D_EXPLORATEUR_AILÉE_MAÎTRE = "Tunique d'explorateur ailée (Maître)";
     private Repository repository;
 
     @Before
     public void setUp() {
         this.repository = Repository.getInstance();
+        new ComponentBuilder().setName(LINEN_SCRAP).setBlackLionPrice(20).done();
+        new ProductionBuilder().setName(BOLT_OF_LINEN).setBlackLionPrice(41).addToRecipe(2, LINEN_SCRAP).done();
+        new ComponentBuilder().setName(JUTE_SCRAP).setBlackLionPrice(2).done();
+        new ProductionBuilder().setName(BOLT_OF_JUTE).setBlackLionPrice(3).addToRecipe(2, JUTE_SCRAP).done();
+        new ComponentBuilder().setName(PILE_OF_GLITTERING_DUST).setBlackLionPrice(1).done();
+        new ProductionBuilder().setName(EIGHT_SLOT_INVISIBLE_BAG).setBlackLionPrice(5)
+                .addToRecipe(10, BOLT_OF_JUTE).addToRecipe(3, PILE_OF_GLITTERING_DUST).done();
+        new ComponentBuilder().setName(LINEN_SCRAP).setBlackLionPrice(20).done();
+        new ProductionBuilder().setName(BOLT_OF_LINEN).setBlackLionPrice(41).addToRecipe(2, LINEN_SCRAP).done();
+        new ComponentBuilder().setName(CHUTE_DE_LIN).setBlackLionPrice(19).done();
+        new ComponentBuilder().setName(SEGMENT_DE_CUIR_CORIACE).setBlackLionPrice(13).done();
+        new ProductionBuilder().setName(ROULEAU_DE_LIN).setBlackLionPrice(41).addToRecipe(2, CHUTE_DE_LIN).done();
+        new ProductionBuilder().setName(MORCEAU_DE_CUIR_CORIACE_TRAITÉ)
+                .setBlackLionPrice(29).addToRecipe(2, SEGMENT_DE_CUIR_CORIACE).done();
+        new ComponentBuilder().setName(BOBINE_DE_FIL_DE_LIN).setBlackLionPrice(38).setVendorPrice(32).done();
+        new ComponentBuilder().setName(GRIFFE_ACÉRÉE).setBlackLionPrice(24).done();
+        new ProductionBuilder().setName(INSIGNE_D_EXPLORATEUR_EN_LIN_BRODÉ).setBlackLionPrice(398)
+                .addToRecipe(1, ROULEAU_DE_LIN).addToRecipe(5, BOBINE_DE_FIL_DE_LIN).addToRecipe(8, GRIFFE_ACÉRÉE).done();
+        new ProductionBuilder().setName(DOUBLURE_DE_MANTEAU_EN_LIN).setBlackLionPrice(44)
+                .addToRecipe(1, ROULEAU_DE_LIN).done();
+        new ProductionBuilder().setName(PANNEAU_DE_MANTEAU_EN_LIN).setBlackLionPrice(430)
+                .addToRecipe(4, ROULEAU_DE_LIN).addToRecipe(1, MORCEAU_DE_CUIR_CORIACE_TRAITÉ).addToRecipe(3, BOBINE_DE_FIL_DE_LIN).done();
+        new ProductionBuilder().setName(TUNIQUE_D_EXPLORATEUR_AILÉE_MAÎTRE)
+                .addToRecipe(1, INSIGNE_D_EXPLORATEUR_EN_LIN_BRODÉ).addToRecipe(1, DOUBLURE_DE_MANTEAU_EN_LIN).setBlackLionPrice(84)
+                .addToRecipe(1, PANNEAU_DE_MANTEAU_EN_LIN).done();
     }
 
     @Test
     public void testGetRecipeForSimpleRecipe() {
-        new ComponentBuilder().setName(LINEN_SCRAP).setBlackLionPrice(20).done();
-        new ProductionBuilder().setName(BOLT_OF_LINEN).setBlackLionPrice(41).addToRecipe(2, LINEN_SCRAP).done();
-
         Production production = (Production) repository.getComponent(BOLT_OF_LINEN);
         assertEquals("2 Linen scrap", production.getIngredientsString());
     }
 
     @Test
     public void testGetRecipeForComplexRecipe() {
-        new ComponentBuilder().setName(JUTE_SCRAP).setBlackLionPrice(2).done();
-        new ProductionBuilder().setName(BOLT_OF_JUTE).setBlackLionPrice(3).addToRecipe(2, JUTE_SCRAP).done();
-        new ComponentBuilder().setName(PILE_OF_GLITTERING_DUST).setBlackLionPrice(1).done();
-        new ProductionBuilder().setName(EIGHT_SLOT_INVISIBLE_BAG).setBlackLionPrice(5)
-                .addToRecipe(10, BOLT_OF_JUTE).addToRecipe(3, PILE_OF_GLITTERING_DUST).done();
-
         Production production = (Production) repository.getComponent(EIGHT_SLOT_INVISIBLE_BAG);
         assertEquals("10 Bolt of jute, 3 Pile of Glittering Dust", production.getBestPricedRecipe().toString());
     }
 
     @Test
     public void testGetBestPricedRecipeForSimpleRecipe() {
-        Component linenScrap = new ComponentBuilder().setName(LINEN_SCRAP).setBlackLionPrice(20).done();
-        Production boltOfLinen = new ProductionBuilder().setName(BOLT_OF_LINEN).setBlackLionPrice(41)
-                .addToRecipe(2, linenScrap).done();
-
-        Recipe bestPricedRecipe = boltOfLinen.getBestPricedRecipe();
+        Recipe bestPricedRecipe = ((Production) repository.getComponent(BOLT_OF_LINEN)).getBestPricedRecipe();
         assertEquals("2 Linen scrap", bestPricedRecipe.toString());
         assertEquals(40, bestPricedRecipe.getBestPrice());
     }
 
     @Test
     public void testGetBestPricedRecipeForComplexeRecipe() {
-        Component chute = new ComponentBuilder().setName("Chute de lin").setBlackLionPrice(19).done();
-        Component segment = new ComponentBuilder().setName("Segment de cuir coriace").setBlackLionPrice(13).done();
-        Production rouleau = new ProductionBuilder().setName("Rouleau de lin").setBlackLionPrice(41)
-                .addToRecipe(2, chute).done();
-        Production morceauDeCuir = new ProductionBuilder().setName("Morceau de cuir coriace traité")
-                .setBlackLionPrice(29).addToRecipe(2, segment).done();
-        Component bobine = new ComponentBuilder().setName("Bobine de fil de lin").setBlackLionPrice(38)
-                .setVendorPrice(32).done();
-        Component griffe = new ComponentBuilder().setName("Griffe acérée").setBlackLionPrice(24).done();
-        Production insigne = new ProductionBuilder().setName("Insigne d'explorateur en lin brodé").setBlackLionPrice(398)
-                .addToRecipe(1, rouleau).addToRecipe(5, bobine).addToRecipe(8, griffe).done();
-        Production doublure = new ProductionBuilder().setName("Doublure de manteau en lin").setBlackLionPrice(44)
-                .addToRecipe(1, rouleau).done();
-        Production panneau = new ProductionBuilder().setName("Panneau de manteau en lin").setBlackLionPrice(430)
-                .addToRecipe(4, rouleau).addToRecipe(1, morceauDeCuir).addToRecipe(3, bobine).done();
-        Production tunique = new ProductionBuilder().setName("Tunique d'explorateur ailée (Maître)")
-                .addToRecipe(1, insigne).addToRecipe(1, doublure).setBlackLionPrice(84)
-                .addToRecipe(1, panneau).done();
-
+        Production tunique = (Production) repository.getComponent(TUNIQUE_D_EXPLORATEUR_AILÉE_MAÎTRE);
         Recipe recipe = tunique.getBestPricedRecipe();
-        String bestRecipe = "1 Insigne d'explorateur en lin brodé, 1 Doublure de manteau en lin, 1 Panneau de manteau en lin";
+        String bestRecipe = "1 "+INSIGNE_D_EXPLORATEUR_EN_LIN_BRODÉ+", 1 "+DOUBLURE_DE_MANTEAU_EN_LIN+", 1 "+PANNEAU_DE_MANTEAU_EN_LIN;
         int bestPrice = 872;
         assertEquals(bestRecipe, recipe.toString());
         assertEquals(bestPrice, recipe.getBestPrice());
+    }
+
+    @Test
+    public void testUseVendorName() {
+        Production production = (Production) repository.getComponent(INSIGNE_D_EXPLORATEUR_EN_LIN_BRODÉ);
+        Recipe bestPricedRecipe = production.getBestPricedRecipe();
+        assertEquals("1 Rouleau de lin, 5 Bobine de fil de lin, 8 Griffe acérée", bestPricedRecipe.toString());
+        assertEquals(393, bestPricedRecipe.getBestPrice());
     }
 }

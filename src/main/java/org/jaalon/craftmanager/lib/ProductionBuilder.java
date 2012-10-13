@@ -25,11 +25,6 @@ public class ProductionBuilder {
         return this;
     }
 
-    public ProductionBuilder addToRecipe(int number, Component ingredient) {
-        production.addToRecipe(number, ingredient.getName());
-        return this;
-    }
-
     public ProductionBuilder setVendorPrice(int vendorPrice) {
         production.setVendorPrice(vendorPrice);
         return this;

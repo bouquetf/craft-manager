@@ -13,12 +13,11 @@ public class Production extends Component {
         recipe.add(ingredient);
     }
 
-    public String getIngredientsString() {
+    public String toString() {
         return recipe.toString();
     }
 
     public Recipe getBestPricedRecipe() {
         return recipe.getBestPricedRecipe();
-
     }
 }

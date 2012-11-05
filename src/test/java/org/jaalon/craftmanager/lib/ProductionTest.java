@@ -59,7 +59,7 @@ public class ProductionTest {
     @Test
     public void testGetRecipeForSimpleRecipe() {
         Production production = (Production) repository.getComponent(BOLT_OF_LINEN);
-        assertEquals("2 Linen scrap", production.getIngredientsString());
+        assertEquals("2 Linen scrap", production.toString());
     }
 
     @Test

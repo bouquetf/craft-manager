@@ -26,7 +26,6 @@ public class ComponentBuilder {
     }
 
     public Component done() {
-        assert (component.getLionPrice() != null) || (component.getVendorPrice() != null);
         repository.addComponent(component);
         return component;
     }

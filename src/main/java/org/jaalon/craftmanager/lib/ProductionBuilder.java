@@ -31,7 +31,6 @@ public class ProductionBuilder {
     }
 
     public Production done() {
-        assert production.getVendorPrice() != null || production.getLionPrice() != null;
         repository.addComponent(production);
         return production;
     }

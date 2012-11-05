@@ -36,4 +36,9 @@ public class Component {
     private boolean vendorIsBestPrice() {
         return vendorPrice!=null && lionPrice != null && vendorPrice < lionPrice;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

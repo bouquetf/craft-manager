@@ -24,4 +24,17 @@ public class Repository {
     public Component getComponent(String name) {
         return components.get(name);
     }
+
+    public boolean contains(String content) {
+        return components.keySet().contains(content);
+    }
+
+    @Override
+    public String toString() {
+        String contents = "";
+        for (String key : components.keySet()) {
+            contents += key + " : " + components.get(key).toString() + "\n";
+        }
+        return contents;
+    }
 }

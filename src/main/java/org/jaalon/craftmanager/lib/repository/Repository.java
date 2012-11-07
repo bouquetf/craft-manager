@@ -1,6 +1,7 @@
 package org.jaalon.craftmanager.lib.repository;
 
 import org.jaalon.craftmanager.lib.Component;
+import org.jaalon.craftmanager.lib.ComponentBuilder;
 
 import java.util.HashMap;
 
@@ -18,7 +19,24 @@ public class Repository {
     }
 
     public void addComponent(Component component) {
-        components.put(component.getName(), component);
+        String componentName = component.getName();
+        if (components.containsKey(componentName)) {
+            Component componentFromRepository = components.get(componentName);
+            components.remove(componentName);
+            Integer blacklionPrice = componentFromRepository.getLionPrice();
+            if (component.getLionPrice() != null) blacklionPrice = component.getLionPrice();
+
+            Integer vendorPrice = componentFromRepository.getVendorPrice();
+            if (component.getVendorPrice() != null) vendorPrice = component.getVendorPrice();
+
+            new ComponentBuilder()
+                    .setName(componentName)
+                    .setBlackLionPrice(blacklionPrice)
+                    .setVendorPrice(vendorPrice)
+                    .done();
+        } else {
+            components.put(componentName, component);
+        }
     }
 
     public Component getComponent(String name) {

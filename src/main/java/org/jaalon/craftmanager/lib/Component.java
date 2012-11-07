@@ -5,7 +5,7 @@ public class Component {
     private Integer vendorPrice;
     private String name;
 
-    public void setBlackLionPrice(int lionPrice) {
+    public void setBlackLionPrice(Integer lionPrice) {
         this.lionPrice = lionPrice;
     }
 
@@ -25,7 +25,7 @@ public class Component {
         return vendorPrice;
     }
 
-    public void setVendorPrice(int vendorPrice) {
+    public void setVendorPrice(Integer vendorPrice) {
         this.vendorPrice = vendorPrice;
     }
 

@@ -31,7 +31,7 @@ public class ProductionBuilder {
     }
 
     public Production done() {
-        repository.addComponent(production);
+        repository.addProduction(production);
         return production;
     }
 }

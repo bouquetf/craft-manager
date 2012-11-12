@@ -2,6 +2,7 @@ package org.jaalon.craftmanager.lib.repository;
 
 import org.jaalon.craftmanager.lib.Component;
 import org.jaalon.craftmanager.lib.ComponentBuilder;
+import org.jaalon.craftmanager.lib.Production;
 
 import java.util.HashMap;
 
@@ -37,6 +38,10 @@ public class Repository {
         } else {
             components.put(componentName, component);
         }
+    }
+
+    public void addProduction(Production production) {
+        components.put(production.getName(), production);
     }
 
     public Component getComponent(String name) {

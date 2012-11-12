@@ -10,12 +10,12 @@ public class ComponentBuilder {
         component = new Component();
     }
 
-    public ComponentBuilder setVendorPrice(int vendorPrice) {
+    public ComponentBuilder setVendorPrice(Integer vendorPrice) {
         component.setVendorPrice(vendorPrice);
         return this;
     }
 
-    public ComponentBuilder setBlackLionPrice(int price) {
+    public ComponentBuilder setBlackLionPrice(Integer price) {
         component.setBlackLionPrice(price);
         return this;
     }

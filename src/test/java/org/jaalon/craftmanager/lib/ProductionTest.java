@@ -4,7 +4,9 @@ import org.jaalon.craftmanager.lib.repository.Repository;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class ProductionTest {
 
@@ -91,5 +93,17 @@ public class ProductionTest {
         Recipe bestPricedRecipe = production.getBestPricedRecipe();
         assertEquals("1 Rouleau de lin, 5 Bobine de fil de lin, 8 Griffe acérée", bestPricedRecipe.toString());
         assertEquals(393, bestPricedRecipe.getBestPrice());
+    }
+
+    @Test
+    public void testMergeProductionShouldMergeEverything() {
+        new ComponentBuilder().setName("a1").setVendorPrice(1).done();
+        new ComponentBuilder().setName("a2").setVendorPrice(2).done();
+        new ProductionBuilder().setName("a").setVendorPrice(10).addToRecipe(2, "a1").addToRecipe(5, "a2").done();
+        new ProductionBuilder().setName("a").setBlackLionPrice(15).done();
+        Production production = (Production) repository.getComponent("a");
+        assertThat(production.getLionPrice(), is(15));
+        assertThat(production.getVendorPrice(), is(10));
+        assertThat(production.getBestPrice(), is(10));
     }
 }

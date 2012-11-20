@@ -20,4 +20,12 @@ public class Production extends Component {
     public Recipe getBestPricedRecipe() {
         return recipe.getBestPricedRecipe();
     }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
 }

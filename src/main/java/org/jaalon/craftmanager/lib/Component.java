@@ -30,7 +30,7 @@ public class Component {
     }
 
     public Integer getBestPrice() {
-        return vendorIsBestPrice() ? vendorPrice : lionPrice;
+        return vendorIsBestPrice() ? getVendorPrice() : getLionPrice();
     }
 
     private boolean vendorIsBestPrice() {

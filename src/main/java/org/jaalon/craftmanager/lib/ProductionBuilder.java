@@ -10,7 +10,7 @@ public class ProductionBuilder {
         production = new Production();
     }
 
-    public ProductionBuilder setBlackLionPrice(int price) {
+    public ProductionBuilder setBlackLionPrice(Integer price) {
         production.setBlackLionPrice(price);
         return this;
     }
@@ -20,13 +20,18 @@ public class ProductionBuilder {
         return this;
     }
 
-    public ProductionBuilder addToRecipe(int number, String ingredient) {
+    public ProductionBuilder addToRecipe(Integer number, String ingredient) {
         production.addToRecipe(number, ingredient);
         return this;
     }
 
-    public ProductionBuilder setVendorPrice(int vendorPrice) {
+    public ProductionBuilder setVendorPrice(Integer vendorPrice) {
         production.setVendorPrice(vendorPrice);
+        return this;
+    }
+
+    public ProductionBuilder setRecipe(Recipe recipe) {
+        production.setRecipe(recipe);
         return this;
     }
 

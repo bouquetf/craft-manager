@@ -5,16 +5,15 @@ import java.util.List;
 
 public class Recipe {
     List<Ingredient> ingredientList;
-    private int price;
+    private Integer price;
 
     public Recipe() {
         ingredientList = new ArrayList<Ingredient>();
-        price = 0;
+        price = null;
     }
 
     public void add(Ingredient ingredient) {
         ingredientList.add(ingredient);
-        price += ingredient.getPrice();
     }
 
     public String toString() {
@@ -27,6 +26,12 @@ public class Recipe {
     }
 
     public int getBestPrice() {
+        if (price == null) {
+            price = 0;
+            for (Ingredient ingredient : ingredientList) {
+                price += ingredient.getPrice();
+            }
+        }
         return price;
     }
 

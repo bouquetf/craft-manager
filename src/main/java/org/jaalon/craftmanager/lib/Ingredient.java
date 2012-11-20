@@ -5,13 +5,13 @@ import org.jaalon.craftmanager.lib.repository.Repository;
 public class Ingredient {
     int number;
     Component component;
-    private int price;
+    private Integer price;
 
     public Ingredient(int number, String component) {
         Repository repository = Repository.getInstance();
         this.component = repository.getComponent(component);
         this.number = number;
-        this.price = number * this.component.getBestPrice();
+        this.price = null;
     }
 
     public int getNumber() {
@@ -27,6 +27,9 @@ public class Ingredient {
     }
 
     public int getPrice() {
+        if (price == null) {
+            price = number * this.component.getBestPrice();
+        }
         return price;
     }
 
